@@ -3,7 +3,7 @@ const connectDB = require('./config/db');
 
 process.on('uncaughtException', (err) => {
   console.log('UnCaught REJECTION! Shutting Down ...');
-  console.log(err);
+  console.log({ err });
   process.exit(1);
 });
 

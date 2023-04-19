@@ -9,14 +9,14 @@ const {
   signoutUser,
 } = require('../controllers/auth');
 const factory = require('../controllers/handlerFactory');
-// const {
-//   getAllUsers,
-//   getSingleUser,
-//   updateUser,
-//   deleteUser,
-//   updateMe,
-//   deleteMe,
-// } = require('../controllers/user');
+const {
+  // getAllUsers,
+  // getSingleUser,
+  // updateUser,
+  // deleteUser,
+  updateMe,
+  // deleteMe,
+} = require('../controllers/user');
 const { protect, getMe, authorize } = require('../middleware/auth');
 const User = require('../models/User');
 const AppError = require('../utils/AppError');
@@ -42,7 +42,7 @@ router.get('/auth/signout', protect, signoutUser);
 // router.route('/users').get(protect, authorize('admin'), getAllUsers);
 
 router.get('/me', protect, getMe, factory.getSingleOne(User));
-// router.patch('/me/update', uploadImage.single('photo'), protect, updateMe);
+router.patch('/me/update', uploadImage.single('photo'), protect, updateMe);
 // router.delete('/me/delete', protect, deleteMe);
 
 // router
