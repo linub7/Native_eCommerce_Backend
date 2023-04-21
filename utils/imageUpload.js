@@ -10,7 +10,7 @@ exports.uploadImageToCloudinary = async (filePath) => {
 
 exports.destroyImageFromCloudinary = async (public_id) => {
   const { result } = await cloudinary.uploader.destroy(public_id);
-  console.log(result);
+  console.log('destroy image result: ', result);
 
   return result;
 };
