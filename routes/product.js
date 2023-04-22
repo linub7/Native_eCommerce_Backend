@@ -5,6 +5,7 @@ const {
   updateProduct,
   addProductImages,
   deleteProductImage,
+  deleteProduct,
 } = require('../controllers/product');
 const factory = require('../controllers/handlerFactory');
 const { protect, authorize } = require('../middleware/auth');
@@ -35,7 +36,7 @@ router
   .route('/products/:id')
   .get(factory.getSingleOne(Product))
   .patch(protect, authorize('admin'), factory.updateOne(Product))
-  .delete(protect, authorize('admin'), factory.deleteOne(Product));
+  .delete(protect, authorize('admin'), deleteProduct);
 
 router.patch(
   '/products/:id/add-images',

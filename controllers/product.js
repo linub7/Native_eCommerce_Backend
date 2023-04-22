@@ -133,4 +133,22 @@ exports.deleteProductImage = asyncHandler(async (req, res, next) => {
   });
 });
 
-//https://res.cloudinary.com/de33aesc2/image/upload/v1681996669/wzbvkee9vqqnpphlmv2k.jpg
+exports.deleteProduct = asyncHandler(async (req, res, next) => {
+  const {
+    params: { id },
+  } = req;
+
+  const existedProduct = await Product.findById(id);
+  if (!existedProduct) return next(new AppError('Product not found', 404));
+
+  for (let index = 0; index < existedProduct.length; index++) {
+    await destroyImageFromCloudinary(existedProduct.photos[index].public_id);
+  }
+
+  await existedProduct.remove();
+
+  return res.json({
+    status: 'success',
+    data: { data: 'product deleted successfully' },
+  });
+});
