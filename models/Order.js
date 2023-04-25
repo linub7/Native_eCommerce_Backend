@@ -18,7 +18,7 @@ const OrderSchema = new Schema(
         required: [true, 'please provide a country'],
       },
       pinCode: {
-        type: String,
+        type: Number,
         required: [true, 'please provide a pin code'],
       },
     },
@@ -27,13 +27,11 @@ const OrderSchema = new Schema(
         name: { type: String, required: [true, 'please provide order name'] },
         price: { type: String, required: [true, 'please provide order price'] },
         quantity: {
-          type: String,
+          type: Number,
           required: [true, 'please provide order quantity'],
         },
         photo: {
-          type: Object,
-          url: String,
-          public_id: String,
+          type: String,
           required: [true, 'please provide order item photo'],
         },
         product: {
@@ -65,7 +63,6 @@ const OrderSchema = new Schema(
       type: Number,
       required: [true, 'Please provide itemsPrice'],
     },
-
     taxPrice: {
       type: Number,
       required: [true, 'Please provide taxPrice'],
@@ -97,7 +94,7 @@ OrderSchema.pre(/^find/, function (next) {
     select: 'name',
   });
   this.populate({
-    path: 'product',
+    path: 'orderItems.product',
     select: 'name',
   });
   next();
