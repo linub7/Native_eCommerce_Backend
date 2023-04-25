@@ -2,6 +2,27 @@ const asyncHandler = require('../middleware/async');
 const AppError = require('../utils/AppError');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+// const stripe = require('stripe')(process.env.STRIPE_API_SECRET);
+
+// exports.processPayment = asyncHandler(async (req, res, next) => {
+//   const {
+//     body: { totalAmount },
+//   } = req;
+//   const { client_secret } = await stripe.paymentIntents.create({
+//     amount: Number(totalAmount * 100),
+//     currency: 'usd',
+//     automatic_payment_methods: { enabled: true },
+//   });
+//   // const { client_secret } = await stripe.paymentIntents.create({
+//   //   amount: Number(totalAmount * 100),
+//   //   currency: 'usd',
+//   // });
+
+//   return res.status({
+//     status: 'success',
+//     data: { data: client_secret },
+//   });
+// });
 
 exports.getAllAdminOrders = asyncHandler(async (req, res, next) => {
   const orders = await Order.find({});

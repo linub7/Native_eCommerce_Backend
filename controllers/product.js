@@ -133,6 +133,21 @@ exports.deleteProductImage = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.getAllAdminProducts = asyncHandler(async (req, res, next) => {
+  const products = await Product.find({});
+  const outOfStock = products.filter((prod) => prod.stock === 0);
+
+  return res.json({
+    status: 'success',
+    data: {
+      data: {
+        products,
+        outOfStock: outOfStock.length,
+        inStock: products.length - outOfStock.length,
+      },
+    },
+  });
+});
 exports.deleteProduct = asyncHandler(async (req, res, next) => {
   const {
     params: { id },

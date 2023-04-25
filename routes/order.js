@@ -6,6 +6,7 @@ const {
   getSingleUserOrders,
   updateOrderStatus,
   getMyOrders,
+  // processPayment,
 } = require('../controllers/order');
 const factory = require('../controllers/handlerFactory');
 const { protect, authorize } = require('../middleware/auth');
@@ -33,5 +34,7 @@ router
   .get(protect, getSingleUserOrders)
   .patch(protect, authorize('admin'), updateOrderStatus)
   .delete(protect, authorize('admin'), factory.deleteOne(Order));
+
+// router.post('/payment', protect, processPayment);
 
 module.exports = router;

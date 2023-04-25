@@ -6,6 +6,7 @@ const {
   addProductImages,
   deleteProductImage,
   deleteProduct,
+  getAllAdminProducts,
 } = require('../controllers/product');
 const factory = require('../controllers/handlerFactory');
 const { protect, authorize } = require('../middleware/auth');
@@ -21,6 +22,8 @@ router.param('id', (req, res, next, val) => {
   }
   next();
 });
+
+router.get('/admin-products', protect, authorize('admin'), getAllAdminProducts);
 
 router
   .route('/products')
