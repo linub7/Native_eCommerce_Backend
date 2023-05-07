@@ -39,7 +39,7 @@ const UserSchema = new Schema(
     passwordConfirm: {
       type: String,
       required: [true, 'Please confirm your password'],
-      minlength: [6, 'password must be at least 6 characters'],
+      minlength: [8, 'password must be at least 8 characters'],
       maxlength: [25, 'password must be less that 26 characters'],
       validate: {
         // this only works on .save() or .create()
@@ -67,7 +67,7 @@ const UserSchema = new Schema(
     pinCode: {
       type: String,
       required: [true, 'Please provide a pinCode'],
-      minlength: [10, 'pinCode must be more or equal than 2'],
+      minlength: [5, 'pinCode must be more or equal than 5'],
     },
     passwordChangedAt: Date,
     passwordResetToken: String,

@@ -5,6 +5,7 @@ const AppError = require('../utils/AppError');
 const {
   destroyImageFromCloudinary,
   uploadImageToCloudinary,
+  getDataUri,
 } = require('../utils/imageUpload');
 const factory = require('./handlerFactory');
 
@@ -65,8 +66,8 @@ exports.updateMe = asyncHandler(async (req, res, next) => {
 
   // upload new avatar if there is one
   if (req.file) {
-    const path = req.file && req.file.path;
-    const { url, public_id } = await uploadImageToCloudinary(path);
+    const photoFile = getDataUri(req.file);
+    const { url, public_id } = await uploadImageToCloudinary(photoFile.content);
     exitedUser.photo = { url, public_id };
   }
 
