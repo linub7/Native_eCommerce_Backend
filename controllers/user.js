@@ -46,14 +46,7 @@ exports.updateMe = asyncHandler(async (req, res, next) => {
         )
       );
   }
-  // 3) filtered out unwanted fields names that are not allowed to be updated
-  // const filteredBody = filterObj(body, 'name', 'email');
-  // 2) Update user document
-  // since we don't deal with password or any sensitive data, so we can use findByIdAndUpdate
-  // const updatedUser = await User.findByIdAndUpdate(user.id, filteredBody, {
-  //   new: true,
-  //   runValidators: true,
-  // });
+
   const exitedUser = await User.findById(user.id);
   if (!exitedUser) return next(new AppError(`User not found`, 404));
 
@@ -66,8 +59,8 @@ exports.updateMe = asyncHandler(async (req, res, next) => {
 
   // upload new avatar if there is one
   if (req.file) {
-    const photoFile = getDataUri(req.file);
-    const { url, public_id } = await uploadImageToCloudinary(photoFile.content);
+    const path = req.file && req.file.path;
+    const { url, public_id } = await uploadImageToCloudinary(path);
     exitedUser.photo = { url, public_id };
   }
 
