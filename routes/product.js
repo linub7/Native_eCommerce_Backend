@@ -23,7 +23,7 @@ router.param('id', (req, res, next, val) => {
   next();
 });
 
-router.get('/admin-products', protect, authorize('admin'), getAllAdminProducts);
+router.get('/products/admin', protect, authorize('admin'), getAllAdminProducts);
 
 router
   .route('/products')
