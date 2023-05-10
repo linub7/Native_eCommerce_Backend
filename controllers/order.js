@@ -35,29 +35,37 @@ exports.getAllAdminOrders = asyncHandler(async (req, res, next) => {
 exports.placeOrder = asyncHandler(async (req, res, next) => {
   const {
     user,
-    body: {
-      shippingInfo,
-      orderItems,
-      paymentMethod,
-      paymentInfo,
-      itemsPrice,
-      taxPrice,
-      shippingCharges,
-      totalAmount,
-      products,
-    },
+    body: { orderItems, taxPrice, shippingCharges },
   } = req;
+
+  let calculateItemsPrice = 0;
+
+  for (let index = 0; index < orderItems.length; index++) {
+    const element = orderItems[index];
+    const products = await Product.find({ _id: element.product }).select(
+      'price'
+    );
+    for (let i = 0; i < products.length; i++) {
+      const item = products[i];
+      calculateItemsPrice += item.price * element.quantity;
+    }
+  }
+  const calculateTotalAmount = calculateItemsPrice + shippingCharges + taxPrice;
+  console.log({ calculateTotalAmount, calculateItemsPrice });
 
   const newOrder = await Order.create({
     user: user._id,
-    shippingInfo,
+    shippingInfo: {
+      address: user.address,
+      city: user.city,
+      country: user.country,
+      pinCode: user.pinCode,
+    },
     orderItems,
-    paymentMethod,
-    paymentInfo,
-    itemsPrice,
+    itemsPrice: calculateItemsPrice,
     taxPrice,
     shippingCharges,
-    totalAmount,
+    totalAmount: calculateTotalAmount,
   });
 
   for (let index = 0; index < orderItems.length; index++) {

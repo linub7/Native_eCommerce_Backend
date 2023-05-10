@@ -30,7 +30,7 @@ const OrderSchema = new Schema(
           type: Number,
           required: [true, 'please provide order quantity'],
         },
-        photo: {
+        image: {
           type: String,
           required: [true, 'please provide order item photo'],
         },
