@@ -121,7 +121,7 @@ exports.deleteProductImage = asyncHandler(async (req, res, next) => {
   const result = await destroyImageFromCloudinary(publicId);
   if (result !== 'ok') return next(new AppError('Error deleting image', 500));
 
-  await Product.updateOne(
+  const updatedProduct = await Product.updateOne(
     { _id: id.toString() },
     { $pull: { photos: { public_id: publicId } } },
     { new: true }
@@ -129,7 +129,7 @@ exports.deleteProductImage = asyncHandler(async (req, res, next) => {
 
   return res.json({
     status: 'success',
-    data: { data: 'Images deleted successfully' },
+    data: { data: updatedProduct },
   });
 });
 
@@ -148,6 +148,7 @@ exports.getAllAdminProducts = asyncHandler(async (req, res, next) => {
     },
   });
 });
+
 exports.deleteProduct = asyncHandler(async (req, res, next) => {
   const {
     params: { id },
@@ -160,7 +161,7 @@ exports.deleteProduct = asyncHandler(async (req, res, next) => {
     await destroyImageFromCloudinary(existedProduct.photos[index].public_id);
   }
 
-  await existedProduct.remove();
+  await Product.findByIdAndRemove(existedProduct._id);
 
   return res.json({
     status: 'success',

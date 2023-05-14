@@ -14,7 +14,7 @@ const ProductSchema = new Schema(
     description: {
       type: String,
       required: [true, 'Please provide a description'],
-      minlength: [20, 'Name must be more or equal than 2'],
+      minlength: [20, 'Description must be more or equal than 2'],
     },
     photos: [
       {

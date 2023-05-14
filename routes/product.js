@@ -2,7 +2,6 @@ const express = require('express');
 const { isValidObjectId } = require('mongoose');
 const {
   createProduct,
-  updateProduct,
   addProductImages,
   deleteProductImage,
   deleteProduct,
