@@ -120,7 +120,7 @@ exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
   order.deliveredAt =
     orderStatus === 'Delivered' ? new Date(Date.now()) : undefined;
 
-  await order.save();
+  await order.save({ validateBeforeSave: false });
 
   return res.json({
     status: 'success',
