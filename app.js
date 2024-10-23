@@ -64,6 +64,10 @@ readdirSync('./routes').map((route) =>
   app.use('/api/v1', require('./routes/' + route))
 );
 
+app.use('/', (req, res) => {
+  res.json({ message: 'OK' });
+});
+
 app.use(errorHandler);
 
 app.all('*', (req, res, next) => {
